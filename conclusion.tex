@@ -1,0 +1,5 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+In this thesis, we have implemented the process, which is to calculate the density of rectangles and right triangles in the cell through GPU and CPU. And we have presented an adaptive task partition method and multi-sweep-line algorithm, which is more suitable for GPU architecture. Optimization techniques, including fast segmented sort, reducing atomic instruction, load balance ,are also applied to further improve the performance. The GPU implementation are accelerated approximately 75 $\sim$ 160 times than sequence CPU version on GTX 1080 Ti and it can be easily extended to multiple GPUs.
+
+In the future, we would like to extend this method to support with more general polygon to handle more general purpose applications.

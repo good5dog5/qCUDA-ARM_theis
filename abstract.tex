@@ -1,0 +1,18 @@
+\begin{abstract}
+\thispagestyle{plain} 
+\setcounter{page}{2}
+Graphics Processing Units (GPUs) have been widely used for computational intensive applications owing to its massive number of computing cores.  However, only few algorithms can fully utilize the computational power of GPUs, because it requires not only enough degree of parallelism, but also the synergetic control between computation and data access in the finest granularity.  
+
+%In VLSI (Very-Large-Scale Integration) design, Metal/Pattern density check, which calculates rectangles and vertical trapezoids union area, is required to ensure the mechanical sturdiness of the chip as a whole and to achieve a smooth planar structure for different metal layers so that all metal layers are uniform in structure and performance.  If the metal density is not uniform distributed, some metal layers may be more in height than others and hence the timing, EM, power integrity may be affected.  There are some library, like Boost, providing sequence polygon union function.  However, it is time consuming on CPU, so parallel computing is necessary.  
+
+In this thesis, we proposed the Multi-Sweep-Line (MSL) algorithm on GPU for the VLSI layout density calculation, which computes the union area of components in a layout.  The shapes of most components are rectilinear rectangles. The MSL algorithm divides the input layout hierarchically into windows, slabs, and sweep line regions to explore the large degree of parallelism.  In addition, to overcome the memory limitation of GPU, tasks are partitioned into batches based on memory usage, estimated by sampling algorithms.  Optimization techniques, fast segmented sort, reducing atomic instruction, load balance, are also applied to further improve the performance.   The experimental results show that our MLS implementation can achieve 75 to nearly 160 times speedup over the CPU version on GTX 1080 ti.
+\end{abstract}
+
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the conference you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals/conferences frown on
+% math in the abstract anyway.
+
+% no keywords
