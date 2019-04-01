@@ -15,94 +15,34 @@ on Chip(SoC) which incorporates a quard-core 2.0-GHz 64-bit ARM-v8 A57 processor
 \end{figure}
 
 \section{Virtualization}
-Virtualization means to create a virtual (rather than physical) version of machine. it is a technique
-that use software to simulate the existence of hardware. Virtualization allows users to run more than
-one software stack within each virtual system on single physical machine.
+Virtualization refers  to the act of creating a virtual (rather than physical) version of something, includeing  virtual computer hardware platforms, storage devices, and computer network resources. it is a technique that use software to simulate the existence of hardware.
+Traditional computing does not allow software to readily share hardware resources. Virtualization
+overcomes that limitation by allowing users to run more than one software stack within each virtual system on single physical machine.
+
 This can get greater efficiency of hardware. A virtual computer systems is known as
 “virtual machine” (VM): an isolated software machine with an operating system and application
 inside. Putting multiple virtual machines on a single computer enables several operating systems and
 applications to run on one physical machine. A thin layer of software called a hypervisor which
-manages the virtual machines at a physical machine and dynamically allocates computing resources to
-each virtual machine as needed. There are two types of virtualization. First is full virtualization
-and second is para virtualization.
+manages the virtual machines at a physical machine and dynamically allocates computing resources like common processo, memory, I/O and storage to
+each virtual machine as needed. 
+
+Early virtualization efforts relied on software emulation to replace hardware functionality. But
+software emulation is a slow and inefficient process.
+
+There are three types of virtualization. First is full virtualization, second is para virtualization and third is hardware-assisted virtualization.
 
 \begin{itemize}
-    \item full virtualization: whose size equals to the number of windows.  Element $C[i]$ records the number of rectangles in window $i+1$.
-    \item para virtualization : whose size also equals to the number of windows.  Elements in $O$ represent the indices of Rectangle Array 
+    \item full virtualization: The operation system inside the virtual machine  is not aware that it is in a virtualized environment and requires no modification. 
+        It use software to emulate all device operation and device driver can be directly installed in the virtual machine. However there are performance overhead and result in performance degradation.
+    \item para virtualization : The operation system inside the virtual machine is aware that it is in a virtualized environment and 
+        some of components are replaced with optimized one to gain better performance.
+    \item hardware-assisted virtualization: An approach  that enables efficient full virtualization using help from hardware capabilities, primarily from the host processors. 
+        while the guest must using the same instruction set as the host machine. Hardware-assisted virtualization was added to x86 processors (Intel VT-x or AMD-V) in 2005 and 2006 (respectively).
+        Hardware-assisted virtualization reduces the maintenance overhead of paravirtualization as it reduces (ideally, eliminates) the changes needed in the guest operating system. It is also considerably easier to obtain better performance.
 \end{itemize}
 
- (see Fig. \ref{fig:fig_2_2})
-\begin{figure}[!h]
-    \centering
-    \includegraphics[scale=0.4]{image/fig_2_2}
-    \caption{Calculation of rectangle union using inclusion-exclusion principle}
-    \label{fig:fig_2_2}
-\end{figure}
+\section{GPU and NVIDIA CUDA}
 
-Preparata et. al. \cite{Preparata:1985:CGI:4333} presented the sweep line algorithm to solve this problem.  The sweep line algorithm, also called plane sweep line algorithm,  was first proposed by Shamos et. al. \cite{Shamos1976GeometricIP} and improved by Bentely et. al. \cite{Bentley1979AlgorithmsFR}.  The sweep line is horizontal and goes from the bottom to the top.   Each rectangle has two events: bottom edge and top edge.  The bottom edge event of a rectangle $R$ happens when the sweep line crosses $R$'s bottom edge.  The algorithm adds $R$ to the active set and records the width of $R$.  The top edge event of $R$ is called when the sweep line crosses its top edge.  The algorithm removes $R$ from the active set. If the active set is empty after $R$'s removal, the algorithm calculates the union area. The algorithm is show in Algorithm \ref{alg:a1}. Slab means partition the space based on the x-coordinates, so that no vertical edge in a slab. 
-
-An example is presented in Fig. \ref{fig:fig_2_3}. This method can be implemented in $O(N^2)$ time complexity without any complex data structure.
-\begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.4]{image/fig_2_3}
-    \caption{Calculation of rectangle union using sweep line algorithm}
-    \label{fig:fig_2_3}
-\end{figure}
-
-\begin{algorithm}[H]
-\label{alg:a1}
-\caption{Sequence sweep line algorithm to compute rectangle union}
-\DontPrintSemicolon
-\renewcommand\baselinestretch{0.7}\selectfont
- \KwData{$R[N]$: a list of rectangles}
- \KwResult{$area$: the area of rectangle union}
- \SetKwProg{Fn}{Function}{}{}
- \SetKwFunction{FMain}{main}
- \SetKwProg{Pn}{Function}{:}{\KwRet}
- \Pn{\FMain}{
-     $area = 0$\;
-     sort all rectangles' x values\;
-     sort all rectangles' y values\;
-     \ForEach{$slab (x[i-1], x[i])$}{
-         \eIf{$x[i-1] == x[i]$}{
-             update\_active\_set($A, x[i]$)\;
-         }
-         {
-             compute\_area($A, x[i-1], x[i]$)\;
-             update\_active\_set($A. x[i]$)\;
-         }
-     }
- }
- \;
- \Pn{update\_active\_set($A, x$)}{
-    \uIf{$x$ is a left edge of $R[k]$}{
-        add $R[k]$ to active\_set $A$\;
-    }
-    \ElseIf{$x$ is a right edge of $R[k]$}{
-        remove $R[k]$ from active\_set $A$\;
-    }
- }
- \;
- \Pn{compute\_area($A, x1, x2$)}{
-    $cnt = 0$\;
-    \ForEach{y}{
-        \If{$y$ is an edge of $R[k]$ in active\_set $A$}{
-            \uIf{$y$ is a bottom edge}{
-                \If{$cnt++ == 0$}{
-                    $begin = y$\;
-                }
-            }
-            \ElseIf{$y$ is a top edge}{
-                \If{$--cnt == 0$}{
-                    $area += (y - begin) * (x2 - x1)$\;
-                }
-            }
-        }
-    }
- }
-\end{algorithm}
-
-\section{GPU and CUDA}
 Graphics Processing Unit (GPU) is a specialized electronic circuit designed to rapidly manipulate and alter memory to accelerate the creation of images in a frame buffer intended for output to a display device, e.g. personal computers, workstations, game consoles, embedded systems, and some mobile phones. In a personal computer, a GPU can be present on a video card, or it can be embedded on the motherboard, or in certain CPUs, on the CPU die. The term GPU was popularized by Nvidia in 1999. It was presented as a ``single-chip processor with integrated transform, lighting, triangle setup/clipping, and rendering engine''.
 
 The difference between CPU and GPU is their operation method. The CPU consists few cores that used to optimize the sequential sequence processing, like branch condition. The GPU contains thousands of smaller cores to execute the processing of multiple tasks simultaneous. GPUs can be more efficient than general purpose CPUs for algorithms where the processing of large blocks of data is done in parallel because their high parallel structures.
